@@ -27,7 +27,6 @@ function parseDom() {
         },
         success: function(res) {
             // load the <p> into $
-            console.log();
             pinynize(res);
         },
         error: function(jqxhr, status, error) {
@@ -35,36 +34,27 @@ function parseDom() {
         }
     });
 }
-// <table onclick='bolder()'>
-//   <tr class='pinyin'>
-//     <td id='1'>ni</td>
-//     <td id='2'>hao</td>
-//   </tr>
-//   <tr class='chinese'>
-//     <td id='1'>你</td>
-//     <td id='2'>好</td>
-//   </tr>
-// </table>
+
+// <div class='box'>
+// <span class='py'>hao</span>
+// <span class='cn'>好</span>
+// </div>
 
 function pinynize(res) {
     var original = res.content;
     var ptags = $(original).find('p');
-    var content = '';
+    var content = '<div class="main">';
     ptags.each(function(idx, elm) {
-        content += '<table><tr>';
+        content += '<p>';
         var ch = elm.childNodes[0].data;
         ch.split('').forEach(function(elm, idx) {
             // for simplicity, take just the first option
             var py = mpy(elm)[0];
-            content += '<td>' + (py ? (py + ' ') : elm) + '</td>';
+            content += '<div class="tile"><span class="py">' + (py ? (py + ' ') : elm) + '</span>';
+            content += '<span class="cn">' + elm + '</span></div>';
         });
-        content += '</tr><tr>'
-        ch.split('').forEach(function(elm, idx) {
-            // for simplicity, take just the first option
-            content += '<td>' + elm + '</td>';
-        });
-        // content = content + ch + '</tr><tr>';
-        content = content + '</tr></table>';
+        content = content + '</p>';
     });
+    content += '</div>';
     $('body').replaceWith(content);
 }

@@ -3,3 +3,34 @@ these make the a tr wrap around, but it's not what i want
 table  { display: block; }
 table  td {display: inline-block; }
 */
+
+.reader {
+  font-size: 20pt;
+  text-align: center;
+  /*width is not useful*/
+  width: "100";
+}
+
+.reader td {
+    padding: 3pt;
+}
+
+.py, .cn {
+  font-size: 20pt;
+  display: table;
+  padding: 3pt;
+}
+
+.tile {
+  display: inline-block;
+  text-align: center;
+  /*width: 2px;*/
+  /*height: 1px;*/
+}
+
+.main {
+  margin: 40px;
+  background-color: #f8f8f8;
+  font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
+  line-height: 1;
+}
