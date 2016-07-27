@@ -16,9 +16,12 @@ table  td {display: inline-block; }
 }
 
 .py, .cn {
-  font-size: 20pt;
+  font-size: 18pt;
   display: table;
-  padding: 3pt;
+  padding: 5pt;
+}
+.py {
+    visibility: hidden
 }
 
 .tile {
@@ -28,8 +31,15 @@ table  td {display: inline-block; }
   /*height: 1px;*/
 }
 
-.main {
+.paragraph {
   margin: 40px;
+}
+
+.main {
+  margin-top: 120px;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-bottom: 120px;
   background-color: #f8f8f8;
   font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
   line-height: 1;

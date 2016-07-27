@@ -44,17 +44,28 @@ function pinynize(res) {
     var original = res.content;
     var ptags = $(original).find('p');
     var content = '<div class="main">';
-    ptags.each(function(idx, elm) {
-        content += '<p>';
-        var ch = elm.childNodes[0].data;
-        ch.split('').forEach(function(elm, idx) {
+    ptags.each(function renderParagraph(pidx, para) {
+        content += '<p class="paragraph">';
+        var ch = para.childNodes[0].data;
+        ch.split('').forEach(function renderTile(char, cidx) {
             // for simplicity, take just the first option
-            var py = mpy(elm)[0];
-            content += '<div class="tile"><span class="py">' + (py ? (py + ' ') : elm) + '</span>';
-            content += '<span class="cn">' + elm + '</span></div>';
+            var py = mpy(char)[0];
+            var pyId = 'p' + cidx + '-' + pidx;
+            var cnId = 'c' + cidx + '-' + pidx;
+            content += '<div class="tile">';
+            content += '<span class="py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
+            content += '<span class="cn" id="' + cnId + '">' + char + '</span></div>';
         });
         content = content + '</p>';
     });
     content += '</div>';
     $('body').replaceWith(content);
+    $('.main').on('click', function(event) {
+        var id = '#p' + event.target.id.slice(1);
+        if ($(id).css('visibility') === 'hidden') {
+            $(id).css('visibility', 'visible');
+        } else {
+            $(id).css('visibility', 'hidden');
+        }
+    });
 }
