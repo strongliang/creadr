@@ -1,0 +1,5 @@
+/*
+these make the a tr wrap around, but it's not what i want
+table  { display: block; }
+table  td {display: inline-block; }
+*/
