@@ -3,39 +3,43 @@ these make the a tr wrap around, but it's not what i want
 table  { display: block; }
 table  td {display: inline-block; }
 */
-
-.reader {
-  font-size: 20pt;
-  text-align: center;
-  /*width is not useful*/
-  width: "100";
+body {
+  background-color: #f8f8f8;
 }
 
-.reader td {
-    padding: 3pt;
-}
-
-.py, .cn {
+.cread-py, .cread-cn {
   font-size: 18pt;
   display: table;
   padding: 5pt;
+  text-align: center;
 }
-.py {
-    visibility: hidden
+.cread-py {
+  font-size: 18pt;
+  visibility: hidden
 }
 
-.tile {
+.cread-tile {
   display: inline-block;
   text-align: center;
   /*width: 2px;*/
   /*height: 1px;*/
 }
 
-.paragraph {
+.cread-title {
+    font-size: 40pt;
+    font-weight: 800;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: '"Microsoft YaHei", 微软雅黑, "Microsoft JhengHei", 华文细黑, STHeiti, MingLiu, Arial, Helvetica, sans-serif';
+    text-align: center;
+}
+
+.cread-paragraph {
   margin: 40px;
 }
 
-.main {
+.cread-main {
   margin-top: 120px;
   margin-left: 80px;
   margin-right: 80px;

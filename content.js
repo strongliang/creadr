@@ -43,24 +43,25 @@ function parseDom() {
 function pinynize(res) {
     var original = res.content;
     var ptags = $(original).find('p');
-    var content = '<div class="main">';
+    var content = '<h1 class="cread-title">' + res.title + '</h1>';
+    content += '<div class="cread-main">';
     ptags.each(function renderParagraph(pidx, para) {
-        content += '<p class="paragraph">';
+        content += '<p class="cread-paragraph">';
         var ch = para.childNodes[0].data;
         ch.split('').forEach(function renderTile(char, cidx) {
             // for simplicity, take just the first option
             var py = mpy(char)[0];
             var pyId = 'p' + cidx + '-' + pidx;
             var cnId = 'c' + cidx + '-' + pidx;
-            content += '<div class="tile">';
-            content += '<span class="py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
-            content += '<span class="cn" id="' + cnId + '">' + char + '</span></div>';
+            content += '<div class="cread-tile">';
+            content += '<span class="cread-py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
+            content += '<span class="cread-cn" id="' + cnId + '">' + char + '</span></div>';
         });
         content = content + '</p>';
     });
     content += '</div>';
     $('body').replaceWith(content);
-    $('.main').on('click', function(event) {
+    $('.cread-main').on('click', function(event) {
         var id = '#p' + event.target.id.slice(1);
         if ($(id).css('visibility') === 'hidden') {
             $(id).css('visibility', 'visible');

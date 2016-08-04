@@ -1,14 +1,13 @@
 {
   "name": "Chinese Reader",
   "description": "A tool to help Chinese learner read Chinese",
-  "version": "1.0",
+  "version": "0.1",
   "permissions": [
     "activeTab",
-    "https://www.readability.com/",
-    "http://localhost:8000/"
+    "https://www.readability.com/"
   ],
   "background": {
-    "scripts": ["jquery-3.0.0.js", "background.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "content_scripts": [{
@@ -17,7 +16,8 @@
     "js": ["mini-pinyin.js",  "jquery-3.0.0.js", "content.js"]
   }],
   "browser_action": {
-    "default_title": "Reader Mode"
+    "default_title": "Left click to turn on Chinese reader mode",
+    "default_icon": "icon.png"
   },
   "manifest_version": 2
 }
