@@ -7,6 +7,14 @@ body {
   background-color: #f8f8f8;
 }
 
+#errDialog {
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  background-color: red;
+}
 .cread-py, .cread-cn {
   font-size: 18pt;
   display: table;
