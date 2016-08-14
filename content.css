@@ -6,9 +6,38 @@ table  td {display: inline-block; }
 body {
   background-color: #f8f8f8;
 }
+.cread-box {
+  width: 100%;
+  border: 1px solid yellow;
+  overflow: auto;
+}
+
+.cread-main {
+  width: 60%;
+  float: left;
+  border: 1px solid red;
+  /*height: 200px;*/
+  margin-top: 20px;
+  margin-left: 80px;
+  margin-right: 40px;
+  margin-bottom: 20px;
+  background-color: #f8f8f8;
+  font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
+  line-height: 1;
+}
+
+.cread-sidebar {
+  margin-top: 20px;
+  margin-right: 20px;
+  width: 28%;
+  float: right;
+  border: 1px solid green;
+  height: 200px;
+}
 
 #errDialog {
-  height: 20px;
+  font-size: 20pt;
+  height: 40px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -16,13 +45,13 @@ body {
   background-color: red;
 }
 .cread-py, .cread-cn {
-  font-size: 18pt;
+  font-size: 24pt;
   display: table;
   padding: 5pt;
   text-align: center;
 }
 .cread-py {
-  font-size: 18pt;
+  font-size: 14pt;
   visibility: hidden
 }
 
@@ -32,7 +61,10 @@ body {
   /*width: 2px;*/
   /*height: 1px;*/
 }
-
+/*span + span {
+  margin-left: 10px;
+}
+*/
 .cread-title {
     font-size: 40pt;
     font-weight: 800;
@@ -47,12 +79,3 @@ body {
   margin: 40px;
 }
 
-.cread-main {
-  margin-top: 120px;
-  margin-left: 80px;
-  margin-right: 80px;
-  margin-bottom: 120px;
-  background-color: #f8f8f8;
-  font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
-  line-height: 1;
-}
