@@ -132,6 +132,7 @@ function processContent(res) {
     $('body').replaceWith(content);
     $('.cread-title, .cread-main').on('click', function(event) {
         var id = '#p' + event.target.id.slice(1);
+        console.log($(event.target).text());
         if ($(id).css('visibility') === 'hidden') {
             $(id).css('visibility', 'visible');
         } else {
