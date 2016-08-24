@@ -6,7 +6,7 @@
  * $: jquery
  */
 // var testing = true;
-var testing = false;
+var testing = true;
 
 // Listen for messages
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -88,27 +88,7 @@ function pynize(text, pidx) {
 }
 function processContent(res) {
     var original = res.content;
-    // $($($('div')[1]).children()[0]).children()
-    // var dtag = $($('div')[1]).children()[0];
-    var dtag = $($(original).find('div')[1]).children()[0];
-    //$($($('div')[1]).children()[0]).children().remove()
-    var ptags = $(original).find('p').clone();
-    // $(dtag).children().remove();
-    // $(dtag).children().remove('p');
-    // $(dtag).remove('p');
-    $(dtag).detach('p');
-    var p0 = $(dtag).text();
-    console.log($(original).text());
-    console.log('xxx');
-    console.log($(dtag).text());
-    console.log('yyy');
-    console.log($(dtag).text());
-    console.log('zzz');
-    console.log(p0);
-    console.log(ptags);
-    // ptags = [$('<p>'+p0+'</p>')].concat(ptags);
-    // ptags.prepend($('<p>'+p0+'</p>'));
-    console.log(ptags);
+    var dataTag;
     var content = '<h1 class="cread-title">' + pynize(res.title, 0) + '</h1>';
     content += '<div class="cread-box"><div class="cread-main">';
     // main content layout
@@ -118,21 +98,32 @@ function processContent(res) {
     // </div>
 
     // content += '<p class=cread-paragraph>' + pynize(ch, pidx + 1) + '</p>';
-    ptags.each(function renderParagraph(pidx, para) {
-        content += '<p class="cread-paragraph">';
-        // TODO: error handling on no content
-        var ch = para.childNodes[0].data || '';
-        if (!para) {
-            displayErr('no paragraph');
-        } else if (!para.childNodes) {
-            displayErr('no paragraph.childNodes');
-        } else if (!para.childNodes[0]) {
-            displayErr('no paragraph.childNodes[0]');
-        } else if (!para.childNodes[0].data) {
-            displayErr('no paragraph.childNodes[0].data');
-        } else {
-            content += pynize(ch, pidx + 2) + '</p>';
+    // ptags.each(function renderParagraph(pidx, para) {
+    if ($(original).find('div div').text().indexOf('\n') !== -1) {
+        dataTag = 'div div';
+    } else {
+        dataTag = 'div';
+    }
+
+
+    $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
+        if (para.trim() !== '') {
+            content += '<p class="cread-paragraph">';
+            content += pynize(para, pidx + 2) + '</p>';
         }
+        // TODO: error handling on no content
+        // var ch = para.childNodes[0].data || '';
+        // if (!para) {
+        //     displayErr('no paragraph');
+        // } else if (!para.childNodes) {
+        //     displayErr('no paragraph.childNodes');
+        // } else if (!para.childNodes[0]) {
+        //     displayErr('no paragraph.childNodes[0]');
+        // } else if (!para.childNodes[0].data) {
+        //     displayErr('no paragraph.childNodes[0].data');
+        // } else {
+        //     content += pynize(ch, pidx + 2) + '</p>';
+        // }
     });
     content += '</div><div class="cread-sidebar">';
     content += '<p>side bar stuff</p>';

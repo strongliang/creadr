@@ -27,12 +27,15 @@ body {
 }
 
 .cread-sidebar {
-  margin-top: 20px;
-  margin-right: 20px;
+  margin: 10px 10px 0 0;
+  padding: 10px;
   width: 28%;
   float: right;
   border: 1px solid green;
   height: 200px;
+  right: 0;
+  top: 120px;
+  position: fixed;
 }
 
 #errDialog {
