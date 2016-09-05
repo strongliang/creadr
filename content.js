@@ -6,7 +6,10 @@
  * $: jquery
  */
 // var testing = true;
-var testing = true;
+var testing = false;
+
+// global structure for all unique characters in the document
+cmap = {};
 
 // Listen for messages
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
@@ -68,6 +71,16 @@ function getContent() {
     }
 }
 
+function updateCharMap(char, cmap) {
+    if (!cmap[char]) {
+        cmap[char] = {
+            clicked: false
+        };
+    }
+
+    return cmap;
+}
+
 // <div class='tile'>
 // <span class='py'>hao</span>
 // <span class='cn'>好</span>
@@ -75,69 +88,74 @@ function getContent() {
 function pynize(text, pidx) {
     var div = '<div>';
     text.split('').forEach(function renderTile(char, cidx) {
+        updateCharMap(char, cmap);
         // for simplicity, take just the first option
         var py = mpy(char)[0];
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
-        div += '<div class="cread-tile">';
-        div += '<span class="cread-py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
-        div += '<span class="cread-cn" id="' + cnId + '">' + char + '</span></div>';
+        div += '<div class="creadr-tile">';
+        div += '<span class="creadr-py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
+        div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span></div>';
     });
     div += '</div>';
     return div;
 }
+
+function sidebarContent() {
+    var content = '<div class="creadr-sidebar-content">';
+    content += _(cmap)
+    .pickBy(function(value, key) {
+        return value.clicked ? true : false;
+    })
+    .keys()
+    .value()
+    .join(' ');
+    content += '</div>';
+    return content;
+}
+
 function processContent(res) {
     var original = res.content;
     var dataTag;
-    var content = '<h1 class="cread-title">' + pynize(res.title, 0) + '</h1>';
-    content += '<div class="cread-box"><div class="cread-main">';
+    var content = '<body><h1 class="creadr-title">' + pynize(res.title, 0) + '</h1>';
+    content += '<div class="creadr-box"><div class="creadr-main">';
     // main content layout
     // <div class="box">
     //   <div class="content"></div>
     //   <div class="sidebar"></div>
     // </div>
 
-    // content += '<p class=cread-paragraph>' + pynize(ch, pidx + 1) + '</p>';
-    // ptags.each(function renderParagraph(pidx, para) {
     if ($(original).find('div div').text().indexOf('\n') !== -1) {
         dataTag = 'div div';
     } else {
         dataTag = 'div';
     }
 
-
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
-            content += '<p class="cread-paragraph">';
+            content += '<p class="creadr-paragraph">';
             content += pynize(para, pidx + 2) + '</p>';
         }
-        // TODO: error handling on no content
-        // var ch = para.childNodes[0].data || '';
-        // if (!para) {
-        //     displayErr('no paragraph');
-        // } else if (!para.childNodes) {
-        //     displayErr('no paragraph.childNodes');
-        // } else if (!para.childNodes[0]) {
-        //     displayErr('no paragraph.childNodes[0]');
-        // } else if (!para.childNodes[0].data) {
-        //     displayErr('no paragraph.childNodes[0].data');
-        // } else {
-        //     content += pynize(ch, pidx + 2) + '</p>';
-        // }
     });
-    content += '</div><div class="cread-sidebar">';
-    content += '<p>side bar stuff</p>';
-    content += '</div></div>';
+    content += '</div><div class="creadr-sidebar">';
+    content += sidebarContent();
+    content += '</div></div></body>';
 
     // inject the html into the existing page
-    $('body').replaceWith(content);
-    $('.cread-title, .cread-main').on('click', function(event) {
-        var id = '#p' + event.target.id.slice(1);
-        console.log($(event.target).text());
-        if ($(id).css('visibility') === 'hidden') {
-            $(id).css('visibility', 'visible');
+    $('body').html(content);
+    $('.creadr-title, .creadr-main').on('click', function(event) {
+        var id = event.target.id.slice(1);
+        var pid = '#p' + id;
+        var char = $('#c' + id).text();
+        // console.log(char);
+        // console.log(cmap[char]);
+        cmap[char].clicked = true;
+        // update the side bar
+        $('.creadr-sidebar').html(sidebarContent());
+        if ($(pid).css('visibility') === 'hidden') {
+            $(pid).css('visibility', 'visible');
         } else {
-            $(id).css('visibility', 'hidden');
+            $(pid).css('visibility', 'hidden');
         }
     });
 }
