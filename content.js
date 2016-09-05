@@ -5,8 +5,8 @@
  * mpy: mini-pinyin.js, which is just a giant lookup table
  * $: jquery
  */
-// var testing = true;
-var testing = false;
+var testing = true;
+// var testing = false;
 
 // global structure for all unique characters in the document
 cmap = {};
@@ -105,9 +105,12 @@ function sidebarContent() {
     var content = '<div class="creadr-sidebar-content">';
     content += _(cmap)
     .pickBy(function(value, key) {
-        return value.clicked ? true : false;
+        return value.clicked;
     })
     .keys()
+    .map(function(elm) {
+        return '<p>' + elm + '</p>';
+    })
     .value()
     .join(' ');
     content += '</div>';

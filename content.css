@@ -32,12 +32,15 @@ body {
   width: 28%;
   float: right;
   border: 1px solid green;
-  height: 120px;
+  height: 400px;
   right: 0;
   top: 200px;
   position: fixed;
   font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
   font-size: 16pt;
+  text-align: left;
+  line-height: 5px;
+  overflow: scroll;
 }
 
 #errDialog {
