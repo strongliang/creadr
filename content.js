@@ -109,7 +109,7 @@ function sidebarContent() {
     })
     .keys()
     .map(function(elm) {
-        return '<p>' + elm + '</p>';
+        return '<p>' + elm + ': ' + mpy(elm).join(', ') + '</p>';
     })
     .value()
     .join(' ');
