@@ -5,8 +5,8 @@
  * mpy: mini-pinyin.js, which is just a giant lookup table
  * $: jquery
  */
-var testing = true;
-// var testing = false;
+// var testing = true;
+var testing = false;
 
 // global structure for all unique characters in the document
 cmap = {};
