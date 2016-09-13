@@ -155,6 +155,8 @@ function processContent(res) {
         cmap[char].clicked = true;
         // update the side bar
         $('.creadr-sidebar').html(sidebarContent());
+        // TODO: why do I need to reset the styles for p tag here?
+        $('.creadr-sidebar p').css({'height': '30'});
         if ($(pid).css('visibility') === 'hidden') {
             $(pid).css('visibility', 'visible');
         } else {
