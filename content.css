@@ -12,6 +12,21 @@ body {
   overflow: auto;
 }
 
+.creadr-title {
+  /*border: 1px solid green;*/
+  font-size: 40pt;
+  font-weight: 800;
+  max-width: 100%;
+  overflow: visible;
+  text-overflow: ellipsis;
+  text-align: center;
+/*  height: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+*/}
+
 .creadr-main {
   width: 60%;
   float: left;
@@ -22,8 +37,9 @@ body {
   margin-right: 40px;
   margin-bottom: 20px;
   background-color: #f8f8f8;
-  font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
-  line-height: 1;
+  /*font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";*/
+  line-height: 3;
+  /*text-overflow: ellipsis;*/
 }
 
 .creadr-sidebar {
@@ -36,7 +52,7 @@ body {
   right: 0;
   top: 200px;
   position: fixed;
-  font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";
+  /*font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";*/
   font-size: 16pt;
   text-align: left;
   line-height: 5px;
@@ -52,38 +68,25 @@ body {
   display: none;
   background-color: red;
 }
-.creadr-py, .creadr-cn {
+.creadr-cn {
   font-size: 24pt;
-  display: table;
-  padding: 5pt;
-  /*text-align: center;*/
+  /*display: table;*/
+  /*padding: 4pt;*/
+  /*margin: 4pt;*/
+  text-align: center;
 }
 .creadr-py {
-  font-size: 18pt;
+  font-size: 12pt;
+  margin-top: 5pt;
+  padding-top: 5pt;
   visibility: hidden
 }
 
-.creadr-tile {
-  display: inline-block;
-  /*text-align: center;*/
-  /*width: 2px;*/
-  /*height: 1px;*/
-}
 /*span + span {
   margin-left: 10px;
 }
 */
-.creadr-title {
-    font-size: 40pt;
-    font-weight: 800;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: '"Microsoft YaHei", 微软雅黑, "Microsoft JhengHei", 华文细黑, STHeiti, MingLiu, Arial, Helvetica, sans-serif';
-    text-align: center;
-}
 
 .creadr-paragraph {
   margin: 40px;
 }
-

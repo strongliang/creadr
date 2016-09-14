@@ -5,8 +5,8 @@
  * mpy: mini-pinyin.js, which is just a giant lookup table
  * $: jquery
  */
-var testing = true;
-// var testing = false;
+// var testing = true;
+var testing = false;
 
 // global structure for all unique characters in the document
 cmap = {};
@@ -86,23 +86,24 @@ function updateCharMap(char, cmap) {
 // <span class='cn'>好</span>
 // </div>
 function pynize(text, pidx) {
+    // var div = '<ruby>';
     var div = '';
     text.split('').forEach(function renderTile(char, cidx) {
         updateCharMap(char, cmap);
         var pys = mpy(char);
-        if (pys.length === 0) {
-            return;
-        }
+        // if (pys.length === 0) {
+        //     return;
+        // }
         // TODO: for hacking it up, take just the first option for now
         py = pys[0];
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
         // div += '<div class="creadr-tile">';
         // <rp>(</rp><rt>han</rt><rp>)</rp>
-        div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + py + '</rt><rp>)</rp>';
         div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
+        div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + py + '</rt><rp>)</rp>';
     });
-    // div += '</div>';
+    // div += '</ruby>';
     return div;
 }
 
@@ -125,8 +126,8 @@ function sidebarContent() {
 function processContent(res) {
     var original = res.content;
     var dataTag;
-    var content = '<body><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1>';
-    content += '<div class="creadr-box"><div class="creadr-main">';
+    var content = '<body><div class="creadr-title"><h1><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
+    content += '<div class="creadr-box"><div>';
     // main content layout
     // <div class="box">
     //   <div class="content"></div>
@@ -141,7 +142,7 @@ function processContent(res) {
 
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
-            content += '<p class="creadr-paragraph"><ruby>';
+            content += '<p class="creadr-paragraph big3"><ruby class="creadr-main">';
             content += pynize(para, pidx + 2) + '</ruby></p>';
         }
     });
@@ -151,13 +152,15 @@ function processContent(res) {
 
     // inject the html into the existing page
     // TODO: use modal
+    $('.creadr-main').css({'all': 'initial'});
     $('body').html(content);
+    // TODO: hacky way to reset the alignment
+    $('.creadr-main').css({'text-align': 'initial'});
     $('.creadr-title, .creadr-main').on('click', function(event) {
+
         var id = event.target.id.slice(1);
         var pid = '#p' + id;
         var char = $('#c' + id).text();
-        // console.log(char);
-        // console.log(cmap[char]);
         cmap[char].clicked = true;
         // update the side bar
         $('.creadr-sidebar').html(sidebarContent());
