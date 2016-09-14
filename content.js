@@ -89,11 +89,10 @@ function pynize(text, pidx) {
     // var div = '<ruby>';
     var div = '';
     text.split('').forEach(function renderTile(char, cidx) {
-        updateCharMap(char, cmap);
         var pys = mpy(char);
-        // if (pys.length === 0) {
-        //     return;
-        // }
+        if (pys.length > 0) {
+            updateCharMap(char, cmap);
+        }
         // TODO: for hacking it up, take just the first option for now
         py = pys[0];
         var pyId = 'p' + cidx + '-' + pidx;
@@ -101,7 +100,7 @@ function pynize(text, pidx) {
         // div += '<div class="creadr-tile">';
         // <rp>(</rp><rt>han</rt><rp>)</rp>
         div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
-        div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + py + '</rt><rp>)</rp>';
+        div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + (py? py: ' ') + '</rt><rp>)</rp>';
     });
     // div += '</ruby>';
     return div;

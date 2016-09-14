@@ -5,6 +5,7 @@ table  td {display: inline-block; }
 */
 body {
   background-color: #f8f8f8;
+  font-family: 'Sentinel SSm A', 'Sentinel SSm B', 'Palatino Linotype', 'Book Antiqua', 'Palatino', 'serif';
 }
 .creadr-box {
   width: 100%;
@@ -38,7 +39,7 @@ body {
   margin-bottom: 20px;
   background-color: #f8f8f8;
   /*font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";*/
-  line-height: 3;
+  line-height: 1;
   /*text-overflow: ellipsis;*/
 }
 
@@ -76,9 +77,9 @@ body {
   text-align: center;
 }
 .creadr-py {
-  font-size: 12pt;
-  margin-top: 5pt;
-  padding-top: 5pt;
+  font-size: 10pt;
+  /*margin-top: 3pt;*/
+  margin-bottom: : 3pt;
   visibility: hidden
 }
 
