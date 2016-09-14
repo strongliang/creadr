@@ -5,8 +5,8 @@
  * mpy: mini-pinyin.js, which is just a giant lookup table
  * $: jquery
  */
-// var testing = true;
-var testing = false;
+var testing = true;
+// var testing = false;
 
 // global structure for all unique characters in the document
 cmap = {};
@@ -86,18 +86,23 @@ function updateCharMap(char, cmap) {
 // <span class='cn'>好</span>
 // </div>
 function pynize(text, pidx) {
-    var div = '<div>';
+    var div = '';
     text.split('').forEach(function renderTile(char, cidx) {
         updateCharMap(char, cmap);
-        // for simplicity, take just the first option
-        var py = mpy(char)[0];
+        var pys = mpy(char);
+        if (pys.length === 0) {
+            return;
+        }
+        // TODO: for hacking it up, take just the first option for now
+        py = pys[0];
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
-        div += '<div class="creadr-tile">';
-        div += '<span class="creadr-py" id="' + pyId + '">' + (py ? (py + ' ') : char) + '</span>';
-        div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span></div>';
+        // div += '<div class="creadr-tile">';
+        // <rp>(</rp><rt>han</rt><rp>)</rp>
+        div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + py + '</rt><rp>)</rp>';
+        div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
     });
-    div += '</div>';
+    // div += '</div>';
     return div;
 }
 
@@ -120,7 +125,7 @@ function sidebarContent() {
 function processContent(res) {
     var original = res.content;
     var dataTag;
-    var content = '<body><h1 class="creadr-title">' + pynize(res.title, 0) + '</h1>';
+    var content = '<body><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1>';
     content += '<div class="creadr-box"><div class="creadr-main">';
     // main content layout
     // <div class="box">
@@ -136,8 +141,8 @@ function processContent(res) {
 
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
-            content += '<p class="creadr-paragraph">';
-            content += pynize(para, pidx + 2) + '</p>';
+            content += '<p class="creadr-paragraph"><ruby>';
+            content += pynize(para, pidx + 2) + '</ruby></p>';
         }
     });
     content += '</div><div class="creadr-sidebar">';
@@ -145,6 +150,7 @@ function processContent(res) {
     content += '</div></div></body>';
 
     // inject the html into the existing page
+    // TODO: use modal
     $('body').html(content);
     $('.creadr-title, .creadr-main').on('click', function(event) {
         var id = event.target.id.slice(1);

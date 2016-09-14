@@ -56,16 +56,16 @@ body {
   font-size: 24pt;
   display: table;
   padding: 5pt;
-  text-align: center;
+  /*text-align: center;*/
 }
 .creadr-py {
-  font-size: 14pt;
+  font-size: 18pt;
   visibility: hidden
 }
 
 .creadr-tile {
   display: inline-block;
-  text-align: center;
+  /*text-align: center;*/
   /*width: 2px;*/
   /*height: 1px;*/
 }
