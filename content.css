@@ -7,10 +7,22 @@ body {
   background-color: #f8f8f8;
   font-family: 'Sentinel SSm A', 'Sentinel SSm B', 'Palatino Linotype', 'Book Antiqua', 'Palatino', 'serif';
 }
-.creadr-box {
+.creadr-box, .creadr-box *, .creadr-title {
   width: 100%;
   border: 1px solid yellow;
-  overflow: auto;
+  /*overflow: auto;*/
+
+  /*all: initial;*/
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: 1em;
+  /*font: inherit;*/
+  vertical-align: baseline;
 }
 
 .creadr-title {
@@ -38,7 +50,6 @@ body {
   margin-right: 40px;
   margin-bottom: 20px;
   background-color: #f8f8f8;
-  /*font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";*/
   line-height: 1;
   /*text-overflow: ellipsis;*/
 }
@@ -53,14 +64,23 @@ body {
   right: 0;
   top: 200px;
   position: fixed;
-  /*font-family: "'Sentinel SSm A', 'Sentinel SSm B', Palatino Linotype, Book Antiqua, Palatino, serif";*/
   font-size: 16pt;
   text-align: left;
   line-height: 5px;
   overflow: scroll;
 }
 
-#errDialog {
+#creadr-loadingDiag {
+  font-size: 20pt;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  background-color: #99cc99;
+}
+
+#creadr-errDialog {
   font-size: 20pt;
   height: 40px;
   width: 100%;
@@ -87,7 +107,9 @@ body {
   margin-left: 10px;
 }
 */
+.creadr-close {
 
+}
 .creadr-paragraph {
   margin: 40px;
 }

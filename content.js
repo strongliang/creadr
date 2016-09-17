@@ -19,21 +19,27 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         // the web-page's DOM content as argument
         sendResponse(document.all[0].outerHTML);
 
+        displayLoadStatus();
         getContent(testing);
     }
 });
 
 function displayErr(msg) {
     $('body').append(
-        '<div id="errDialog"> ' +
+        '<div id="creadr-errDialog"> ' +
         msg +
-        '<span class="close">x</span></div>'
+        '<span class="creadr-close">x</span></div>'
         );
-    $('#errDialog').slideDown('slow');
-    $('#errDialog .close').on('click', function() {
-        $('#errDialog').hide();
+    $('#creadr-errDialog').slideDown('slow');
+    $('#creadr-errDialog .creadr-close').on('click', function() {
+        $('#creadr-errDialog').hide();
     });
+}
 
+function displayLoadStatus() {
+    $('body').append(
+        '<div id="creadr-loadingDiag"> Loading...');
+    $('#creadr-loadingDiag').slideDown('fast');
 }
 
 function getContent() {
@@ -125,6 +131,7 @@ function sidebarContent() {
 function processContent(res) {
     var original = res.content;
     var dataTag;
+    // $('#creadr-loadingDiag').hide();
     var content = '<body><div class="creadr-title"><h1><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
     content += '<div class="creadr-box"><div>';
     // main content layout
