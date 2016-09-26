@@ -11,18 +11,20 @@
     "persistent": false
   },
   "content_scripts": [{
-    "matches": ["<all_urls>"],
+    "matches": [
+      "<all_urls>"
+    ],
     "html": [
       "content.html"
     ],
     "css": [
-      "content.css",
-      "bootstrap.min.css"
+      "content.css"
     ],
     "js": [
       "mini-pinyin.js",
       "lodash.min.js",
       "jquery-3.0.0.js",
+      "Readability.js",
       "config.js",
       "content.js"
     ]
