@@ -28,7 +28,7 @@
   }],
   "browser_action": {
     "default_title": "Left click to turn on Chinese reader mode",
-    "default_icon": "icon_big.png"
+    "default_icon": "icon_v4.png"
   },
   "manifest_version": 2
 }
