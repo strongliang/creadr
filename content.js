@@ -153,7 +153,7 @@ function sidebarContent() {
 function processContent(res) {
     var original = res.content;
     var dataTag;
-    var content = '<body><div class="creadr-title jumbotron"><h1><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
+    var content = '<body><div><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
     content += '<div class="creadr-box"><div>';
     // main content layout
     // <div class="box">
