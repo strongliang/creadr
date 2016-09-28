@@ -153,8 +153,9 @@ function sidebarContent() {
 function processContent(res) {
     var original = res.content;
     var dataTag;
-    var content = '<body><div><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
+    var content = '<div><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
     content += '<div class="creadr-box"><div>';
+
     // main content layout
     // <div class="box">
     //   <div class="content"></div>
@@ -175,14 +176,12 @@ function processContent(res) {
     });
     content += '</div><div class="creadr-sidebar">';
     content += sidebarContent();
-    content += '</div></div></body>';
+    content += '</div></div>';
 
     // inject the html into the existing page
     // TODO: use modal
-    $('.creadr-main').css({'all': 'initial'});
-    $('body').html(content);
+    $('body').addClass('creadr-body').html(content);
     // TODO: hacky way to reset the alignment
-    $('.creadr-main').css({'text-align': 'initial'});
     $('.creadr-title, .creadr-main').on('click', function(event) {
 
         var id = event.target.id.slice(1);
@@ -190,7 +189,6 @@ function processContent(res) {
         var char = $('#c' + id).text();
         cmap[char].clicked = true;
         // TODO: why do I need to reset the styles for p tag here?
-        $('.creadr-sidebar p').css({'height': '30'});
         if ($(pid).css('visibility') === 'hidden') {
             $(pid).css('visibility', 'visible');
             cmap[char].cnt++;
