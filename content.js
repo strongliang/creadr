@@ -4,10 +4,12 @@
  * config: stores some config. this file shouldn't be checked in to git
  * mpy: mini-pinyin.js, which is just a giant lookup table
  * $: jquery
+ * Readability: Readability.js
+ * config: config.js that contains a API token to readability.com
  */
 // var testing = true;
 var testing = false;
-
+var creadr_enabled = false;
 // global structure for all unique characters in the document
 cmap = {};
 
@@ -17,10 +19,12 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.text === 'report_back') {
         // Call the specified callback, passing
         // the web-page's DOM content as argument
-        sendResponse(document.all[0].outerHTML);
-
-        displayLoadStatus();
-        getContent(testing);
+        // sendResponse(document.all[0].outerHTML);
+        if (!creadr_enabled) {
+            creadr_enabled = true;
+            displayLoadStatus();
+            getContent(testing);
+        }
     }
 });
 
