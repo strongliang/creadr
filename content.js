@@ -142,7 +142,7 @@ function sidebarContent() {
     .reverse()
     .map(function(elm) {
         // return '<p>' + elm.char + ': ' + mpy(elm.char).join(', ') + '</p>';
-        return '<p>' + elm.char + ': ' + elm.cnt + '</p>';
+        return '<p>' + elm.char + ': ' + mpy(elm.char)[0] + '</p>';
     })
     .value()
     .join(' ');
