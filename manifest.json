@@ -1,7 +1,7 @@
 {
   "name": "creadr",
   "description": "creadr is a tool designed to help Chinese learners with reading web content",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "permissions": [
     "activeTab",
     "https://www.readability.com/"

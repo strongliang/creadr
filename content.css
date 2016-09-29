@@ -10,7 +10,7 @@ table  td {display: inline-block; }
   font-size: 100%;
   font-weight: normal;
   letter-spacing: normal;
-  line-height: 1em;
+  line-height: 1;
   margin: 0;
   padding: 0;
   vertical-align: baseline;
@@ -32,7 +32,7 @@ table  td {display: inline-block; }
   font-size: 22pt;
   background-color: #f8f8f8;
   float: left;
-  line-height: 2em;
+  line-height: 2;
   margin-bottom: 20px;
   margin-left: 240px;
   margin-right: 40px;
