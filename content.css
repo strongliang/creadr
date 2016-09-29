@@ -19,7 +19,7 @@ table  td {display: inline-block; }
 }
 
 .creadr-title {
-  font-size: 40pt;
+  font-size: 38pt;
   font-weight: 800;
   max-width: 100%;
   overflow: visible;
@@ -29,6 +29,7 @@ table  td {display: inline-block; }
 
 .creadr-main {
   all: initial;
+  font-size: 22pt;
   background-color: #f8f8f8;
   float: left;
   line-height: 2em;
@@ -85,12 +86,12 @@ table  td {display: inline-block; }
 
 .creadr-cn {
   cursor: pointer;
-  font-size: 24pt;
+  /*font-size: 24pt;*/
   text-align: center;
 }
 
 .creadr-py {
-  font-size: 10pt;
+  font-size: 11pt;
   margin-bottom: : 3pt;
   visibility: hidden
 }
