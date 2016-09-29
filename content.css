@@ -31,7 +31,7 @@ table  td {display: inline-block; }
   all: initial;
   background-color: #f8f8f8;
   float: left;
-  line-height: 1;
+  line-height: 2em;
   margin-bottom: 20px;
   margin-left: 240px;
   margin-right: 40px;
