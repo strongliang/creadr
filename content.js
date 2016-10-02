@@ -7,9 +7,14 @@
  * Readability: Readability.js
  * config: config.js that contains a API token to readability.com
  */
-// var testing = true;
-var testing = false;
-var creadr_enabled = false;
+
+var globals = {
+    // testing: true,
+    testing: false,
+    toggleAll: false,
+    creadrEnabled: false
+};
+
 // global structure for all unique characters in the document
 cmap = {};
 
@@ -20,10 +25,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         // Call the specified callback, passing
         // the web-page's DOM content as argument
         // sendResponse(document.all[0].outerHTML);
-        if (!creadr_enabled) {
-            creadr_enabled = true;
+        if (!globals.creadrEnabled) {
+            globals.creadrEnabled = true;
             displayLoadStatus();
-            getContent(testing);
+            getContent(globals.testing);
         }
     }
 });
@@ -48,7 +53,7 @@ function displayLoadStatus() {
 
 function getContent() {
 
-    if (testing) {
+    if (globals.testing) {
         // some dummy test data
         processContent({
             domain: 'www.ppzuowen.com',
@@ -126,8 +131,6 @@ function pynize(text, pidx) {
         py = pys[0];
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
-        // div += '<div class="creadr-tile">';
-        // <rp>(</rp><rt>han</rt><rp>)</rp>
         div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
         div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + (py? py: ' ') + '</rt><rp>)</rp>';
     });
@@ -137,8 +140,9 @@ function pynize(text, pidx) {
 
 function sidebarContent() {
     var content = '<div class="creadr-sidebar-content">';
+    content += '<div id="buttons"><button id="toggle-all">Toggle All</button></div>';
     console.log(
-        _(cmap).filter(function(o) { return o.clicked }).value()
+        _(cmap).filter(function(o) { return o.clicked; }).value()
     );
     content += _(cmap)
     .filter(function(o) { return o.clicked; })
@@ -191,15 +195,34 @@ function processContent(res) {
         var id = event.target.id.slice(1);
         var pid = '#p' + id;
         var char = $('#c' + id).text();
-        cmap[char].clicked = true;
         // TODO: why do I need to reset the styles for p tag here?
         if ($(pid).css('visibility') === 'hidden') {
             $(pid).css('visibility', 'visible');
+            cmap[char].clicked = true;
             cmap[char].cnt++;
         } else {
             $(pid).css('visibility', 'hidden');
         }
         // update the side bar
         $('.creadr-sidebar').html(sidebarContent());
+        $('#toggle-all').on('click', function(event) {
+            if (globals.toggleAll) {
+                $('.creadr-py').css('visibility', 'hidden');
+                globals.toggleAll = false;
+            } else {
+                $('.creadr-py').css('visibility', 'visible');
+                globals.toggleAll = true;
+            }
+        });
+    });
+
+    $('#toggle-all').on('click', function(event) {
+        if (globals.toggleAll) {
+            $('.creadr-py').css('visibility', 'hidden');
+            globals.toggleAll = false;
+        } else {
+            $('.creadr-py').css('visibility', 'visible');
+            globals.toggleAll = true;
+        }
     });
 }

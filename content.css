@@ -49,13 +49,13 @@ table  td {display: inline-block; }
   border-top: 1px solid #ccc;
   float: right;
   font-size: 16pt;
-  height: 400px;
+  height: 500px;
   overflow: auto;
   padding: 20px;
   position: fixed;
   right: 0;
   text-align: left;
-  top: 200px;
+  top: 150px;
   width: 15%;
 }
 
@@ -91,7 +91,7 @@ table  td {display: inline-block; }
 }
 
 .creadr-py {
-  font-size: 11pt;
+  font-size: 10pt;
   margin-bottom: : 3pt;
   visibility: hidden
 }
@@ -102,4 +102,15 @@ table  td {display: inline-block; }
 
 .creadr-paragraph {
   margin: 40px;
+}
+
+.creadr-sidebar-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
