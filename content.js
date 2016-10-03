@@ -9,8 +9,8 @@
  */
 
 var globals = {
-    testing: true,
-    // testing: false,
+    // testing: true,
+    testing: false,
     toggleAll: false,
     creadrEnabled: false
 };
@@ -103,7 +103,7 @@ function getContent() {
     }
 }
 
-function updateCharMap(char, charId, cmap) {
+function updateCharMap(char, pyId, cmap) {
     if (!cmap[char]) {
         cmap[char] = {
             char: char,
@@ -112,7 +112,7 @@ function updateCharMap(char, charId, cmap) {
         };
         cmap[char].Ids = [];
     }
-    cmap[char].Ids.push(charId);
+    cmap[char].Ids.push(pyId);
 
     return cmap;
 }
@@ -130,7 +130,7 @@ function pynize(text, pidx) {
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
         if (pys.length > 0) {
-            updateCharMap(char, cnId, cmap);
+            updateCharMap(char, pyId, cmap);
         }
         div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
         div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + (py? py: ' ') + '</rt><rp>)</rp>';
@@ -143,6 +143,7 @@ function sidebarContent() {
     content += '<div id="buttons">' +
         '<button id="toggle-all">Toggle All</button>' +
         '<button id="toggle-random">Toggle Random</button>' +
+        '<button id="toggle-first">Toggle First</button>' +
         '</div>';
     console.log(
         _(cmap).filter(function(o) { return o.clicked; }).value()
@@ -179,6 +180,7 @@ function processContent(res) {
         dataTag = 'div';
     }
 
+    console.log(dataTag);
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
             content += '<p class="creadr-paragraph big3"><ruby class="creadr-main">';
@@ -218,8 +220,7 @@ function processContent(res) {
 }
 
 function attachSidebarButtonListener() {
-    $('#toggle-all, #toggle-random').on('click', function(event) {
-    // $('#toggle-all').on('click', function(event) {
+    $('#toggle-all, #toggle-random, #toggle-first').on('click', function(event) {
         if (globals.toggleAll) {
             $('.creadr-py').css('visibility', 'hidden');
             globals.toggleAll = false;
@@ -227,13 +228,22 @@ function attachSidebarButtonListener() {
             if (event.target.id === 'toggle-all') {
                 $('.creadr-py').css('visibility', 'visible');
             } else if (event.target.id === 'toggle-random') {
-                randomElements = $(".creadr-py").get().sort(function() {
-                  return Math.round(Math.random()) - 0.5;
+                randomChar = $('.creadr-py').get().sort(function() {
+                    return Math.round(Math.random()) - 0.5;
                 });
 
-                $(randomElements)
-                .slice(0, randomElements.length * 0.5)
+                $(randomChar)
+                .slice(0, randomChar.length * 0.5)
                 .css('visibility', 'visible');
+            } else if (event.target.id === 'toggle-first') {
+                firstChar = _(cmap)
+                    .mapValues(function(o){return o.Ids[0];})
+                    .values()
+                    .value();
+                firstChar.forEach(function(elm) {
+                    $('#'+elm).css('visibility', 'visible');
+                });
+                // $(firstChar).css('visibility', 'visible');
             }
             globals.toggleAll = true;
         }
