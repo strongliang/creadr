@@ -140,7 +140,10 @@ function pynize(text, pidx) {
 
 function sidebarContent() {
     var content = '<div class="creadr-sidebar-content">';
-    content += '<div id="buttons"><button id="toggle-all">Toggle All</button></div>';
+    content += '<div id="buttons">' +
+        '<button id="toggle-all">Toggle All</button>' +
+        '<button id="toggle-random">Toggle Random</button>' +
+        '</div>';
     console.log(
         _(cmap).filter(function(o) { return o.clicked; }).value()
     );
@@ -205,23 +208,30 @@ function processContent(res) {
         }
         // update the side bar
         $('.creadr-sidebar').html(sidebarContent());
-        $('#toggle-all').on('click', function(event) {
-            if (globals.toggleAll) {
-                $('.creadr-py').css('visibility', 'hidden');
-                globals.toggleAll = false;
-            } else {
-                $('.creadr-py').css('visibility', 'visible');
-                globals.toggleAll = true;
-            }
-        });
+        attachSidebarButtonListener();
+
     });
 
-    $('#toggle-all').on('click', function(event) {
+    // TODO: get rid of this duplicate call
+    attachSidebarButtonListener();
+}
+
+function attachSidebarButtonListener() {
+    $('#toggle-all, #toggle-random').on('click', function(event) {
+    // $('#toggle-all').on('click', function(event) {
         if (globals.toggleAll) {
             $('.creadr-py').css('visibility', 'hidden');
             globals.toggleAll = false;
         } else {
-            $('.creadr-py').css('visibility', 'visible');
+            if (event.target.id === 'toggle-all') {
+                $('.creadr-py').css('visibility', 'visible');
+            } else if (event.target.id === 'toggle-random') {
+                randomElements = $(".creadr-py").get().sort(function() {
+                  return Math.round(Math.random()) - 0.5;
+                }).slice(0, _.keys(cmap).length * 3 / 4);
+
+                $(randomElements).css('visibility', 'visible');
+            }
             globals.toggleAll = true;
         }
     });
