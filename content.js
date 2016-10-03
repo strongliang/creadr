@@ -9,8 +9,8 @@
  */
 
 var globals = {
-    // testing: true,
-    testing: false,
+    testing: true,
+    // testing: false,
     toggleAll: false,
     creadrEnabled: false
 };
@@ -103,14 +103,16 @@ function getContent() {
     }
 }
 
-function updateCharMap(char, cmap) {
+function updateCharMap(char, charId, cmap) {
     if (!cmap[char]) {
         cmap[char] = {
             char: char,
             clicked: false,
             cnt: 0
         };
+        cmap[char].Ids = [];
     }
+    cmap[char].Ids.push(charId);
 
     return cmap;
 }
@@ -120,21 +122,19 @@ function updateCharMap(char, cmap) {
 // <span class='cn'>好</span>
 // </div>
 function pynize(text, pidx) {
-    // var div = '<ruby>';
     var div = '';
     text.split('').forEach(function renderTile(char, cidx) {
         var pys = mpy(char);
-        if (pys.length > 0) {
-            updateCharMap(char, cmap);
-        }
         // TODO: for hacking it up, take just the first option for now
         py = pys[0];
         var pyId = 'p' + cidx + '-' + pidx;
         var cnId = 'c' + cidx + '-' + pidx;
+        if (pys.length > 0) {
+            updateCharMap(char, cnId, cmap);
+        }
         div += '<span class="creadr-cn" id="' + cnId + '">' + char + '</span>';
         div += '<rp>(</rp><rt class="creadr-py" id="' + pyId + '">' + (py? py: ' ') + '</rt><rp>)</rp>';
     });
-    // div += '</ruby>';
     return div;
 }
 
@@ -198,6 +198,7 @@ function processContent(res) {
         var id = event.target.id.slice(1);
         var pid = '#p' + id;
         var char = $('#c' + id).text();
+        console.log(cmap[char]);
         // TODO: why do I need to reset the styles for p tag here?
         if ($(pid).css('visibility') === 'hidden') {
             $(pid).css('visibility', 'visible');
@@ -228,9 +229,11 @@ function attachSidebarButtonListener() {
             } else if (event.target.id === 'toggle-random') {
                 randomElements = $(".creadr-py").get().sort(function() {
                   return Math.round(Math.random()) - 0.5;
-                }).slice(0, _.keys(cmap).length * 3 / 4);
+                });
 
-                $(randomElements).css('visibility', 'visible');
+                $(randomElements)
+                .slice(0, randomElements.length * 0.5)
+                .css('visibility', 'visible');
             }
             globals.toggleAll = true;
         }
