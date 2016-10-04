@@ -13,8 +13,8 @@ var globals = {
     testing: false,
     toggleAll: false,
     creadrEnabled: false,
-    parseOnServer: false
-    // parseOnServer: true
+    // parseOnServer: false
+    parseOnServer: true
 };
 
 // global structure for all unique characters in the document
@@ -81,6 +81,7 @@ function getContent() {
         var article = new Readability(uri, documentClone).parse();
         if (globals.parseOnServer || !article) {
             console.log('local parsing failed, try readability.com');
+            globals.parseOnServer = true;
             // displayErr('readability api returned error');
             $.ajax({
                 url: 'https://www.readability.com/api/content/v1/parser',
@@ -96,7 +97,14 @@ function getContent() {
                 },
                 error: function(jqxhr, status, error) {
                     console.log(status + error);
-                    displayErr('readability api returned error');
+                    // if readability.com fails, try the local method again
+                    // TODO: this is a bit circular but for now it's probably ok
+                    article = new Readability(uri, documentClone).parse();
+                    if (!article) {
+                        displayErr('readability api returned error');
+                    } else {
+                        processContent(article);
+                    }
                 }
             });
         } else {
@@ -166,7 +174,7 @@ function sidebarContent() {
 
 function processContent(res) {
     var original = res.content;
-    console.log(original);
+    // console.log(original);
     // console.log($(original).find('div div').text());
     var dataTag;
     var content = '<div><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
@@ -178,15 +186,28 @@ function processContent(res) {
     //   <div class="sidebar"></div>
     // </div>
 
+    // giant hack
     // if ($(original).find('div div').text().indexOf('\n') !== -1) {
-    //     dataTag = 'div div';
-    // } else {
-    //     dataTag = 'div';
-    // }
-    // console.log('dataTag: ', dataTag);
-    dataTag = '#artibody';
+    if ($(original).find('div div div').text().length > 10) {
+        dataTag = 'div div div';
+    } else if ($(original).find('div div').text().length > 10) {
+        dataTag = 'div div ';
+    } else {
+        dataTag = 'div';
+    }
 
-    console.log($(original).find(dataTag).text());
+    // this method looks cleaner but doesn't work reliably across sites
+    // console.log('dataTag: ', dataTag);
+    // if (globals.parseOnServer) {
+    //     dataTag = '.articleContent';
+    // } else {
+    //     dataTag = '#artibody';
+    // }
+
+    // dataTag = '.articleContent';
+    // dataTag = 'div div div';
+    // console.log(dataTag);
+    // console.log($(original).find(dataTag).text());
 
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
