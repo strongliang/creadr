@@ -12,7 +12,9 @@ var globals = {
     // testing: true,
     testing: false,
     toggleAll: false,
-    creadrEnabled: false
+    creadrEnabled: false,
+    parseOnServer: false
+    // parseOnServer: true
 };
 
 // global structure for all unique characters in the document
@@ -77,7 +79,7 @@ function getContent() {
         };
         var documentClone = document.cloneNode(true);
         var article = new Readability(uri, documentClone).parse();
-        if (!article) {
+        if (globals.parseOnServer || !article) {
             console.log('local parsing failed, try readability.com');
             // displayErr('readability api returned error');
             $.ajax({
@@ -164,6 +166,8 @@ function sidebarContent() {
 
 function processContent(res) {
     var original = res.content;
+    console.log(original);
+    // console.log($(original).find('div div').text());
     var dataTag;
     var content = '<div><h1 class="creadr-title"><ruby>' + pynize(res.title, 0) + '</ruby></h1></div>';
     content += '<div class="creadr-box"><div>';
@@ -174,13 +178,16 @@ function processContent(res) {
     //   <div class="sidebar"></div>
     // </div>
 
-    if ($(original).find('div div').text().indexOf('\n') !== -1) {
-        dataTag = 'div div';
-    } else {
-        dataTag = 'div';
-    }
+    // if ($(original).find('div div').text().indexOf('\n') !== -1) {
+    //     dataTag = 'div div';
+    // } else {
+    //     dataTag = 'div';
+    // }
+    // console.log('dataTag: ', dataTag);
+    dataTag = '#artibody';
 
-    console.log(dataTag);
+    console.log($(original).find(dataTag).text());
+
     $(original).find(dataTag).text().split('\n').forEach(function renderParagraph(para, pidx) {
         if (para.trim() !== '') {
             content += '<p class="creadr-paragraph big3"><ruby class="creadr-main">';
