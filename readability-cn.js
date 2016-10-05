@@ -37,7 +37,7 @@ var readConvertLinksToFootnotes = false,
     readMargin = 'margin-x-narrow';
 
 var config = {
-    debug: true,
+    debug: false,
 
     // 立即加载，否则滚到底部加载下一页， window.loadNextPageImmediately 优先级高于这个
     loadNextPageImmediately: false,
@@ -2223,7 +2223,7 @@ span.version {display:none;}\
 .style-newspaper #readInner a {color:#0924e1;}\
 .style-novel {font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;background:#f4eed9;color:#1d1916;}\
 .style-novel #readInner a {color:#1856ba;}\
-.style-ebook {font-family:Arial, Helvetica, sans-serif;background:#edebe8;color:#2c2d32;}\
+.style-ebook {font-family:Arial, Helvetica, sans-serif;background:#f8f8f8;color:#2c2d32;}\
 .style-ebook #readInner a {color:#187dc9;}\
 .style-ebook h1 {font-family:"微软雅黑","Arial Black", Gadget, sans-serif;font-weight:400;}\
 .style-terminal {font-family:"Lucida Console", Monaco, monospace;background:#1d4e2c;color:#c6ffc6;}\
