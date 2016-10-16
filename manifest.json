@@ -1,7 +1,7 @@
 {
   "name": "creadr",
   "description": "creadr is a tool designed to help Chinese learners with reading web content",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "permissions": [
     "activeTab",
     "https://www.readability.com/"
@@ -24,7 +24,7 @@
       "mini-pinyin.js",
       "lodash.min.js",
       "jquery-3.0.0.js",
-      "Readability.js",
+      "readability-cn.js",
       "config.js",
       "content.js"
     ]
