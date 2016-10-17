@@ -94,9 +94,10 @@ function pynize(text, pidx) {
 function sidebarContent() {
     var content = '<div class="creadr-sidebar-content">';
     content += '<div id="buttons">' +
-        '<button id="toggle-all">Toggle All</button>' +
-        '<button id="toggle-random">Toggle Random</button>' +
-        '<button id="toggle-first">Toggle First</button>' +
+        '<p>Toggle:</p>' +
+        '<button id="toggle-all">All</button>' +
+        '<button id="toggle-random">Random</button>' +
+        '<button id="toggle-first">First</button>' +
         '</div>';
     // console.log(
     //     _(cmap).filter(function(o) { return o.clicked; }).value()
