@@ -3,6 +3,13 @@ these make the a tr wrap around, but it's not what i want
 table  { display: block; }
 table  td {display: inline-block; }
 */
+
+@media screen and (min-width: 0px) and (max-width: 768px) {
+  ruby.creadr-main {
+    margin-left: 50px;
+  }
+}
+
 .creadr-body {
   background-color: #fafafa;
   border: 0;
