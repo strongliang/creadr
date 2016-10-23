@@ -173,7 +173,6 @@ var readability = {
         /* Pull out any possible next page link first */
         var nextPageLink = readability.findNextPageLink(document.body);
 
-        readability.prepDocument();
 
         /* Build readability's DOM tree */
         var overlay        = document.createElement("DIV");
@@ -188,13 +187,15 @@ var readability = {
             articleContent    = document.createElement("DIV");
             articleContent.id = "readability-content";
             articleContent.innerHTML = [
-                "<p>Sorry, readability was unable to parse this page for content. If you feel like it should have been able to, please <a href='http://code.google.com/p/arc90labs-readability/issues/entry'>let us know by submitting an issue.</a></p>",
+                "<p>Sorry, creadr was unable to process this page.</p>",
                 (readability.frameHack ? "<p><strong>It appears this page uses frames.</strong> Unfortunately, browser security properties often cause Readability to fail on pages that include frames. You may want to try running readability itself on this source page: <a href='" + readability.biggestFrame.src + "'>" + readability.biggestFrame.src + "</a></p>" : ""),
-                "<p>Also, please note that Readability does not play very nicely with front pages. Readability is intended to work on articles with a sizable chunk of text that you'd like to read comfortably. If you're using Readability on a landing page (like nytimes.com for example), please click into an article first before using Readability.</p>"
             ].join('');
 
             nextPageLink = null;
+            window.readabilityFailure = true;
+            return;
         }
+        readability.prepDocument();
 
         overlay.id              = "readOverlay";
         innerDiv.id             = "readInner";
@@ -242,10 +243,10 @@ var readability = {
             articleContent.style.display = "none";
             var rootWarning = document.createElement('p');
                 rootWarning.id = "readability-warning";
-                rootWarning.innerHTML = "<em>Readability</em> was intended for use on individual articles and not home pages. " +
-                    "If you'd like to try rendering this page anyway, <a onClick='javascript:document.getElementById(\"readability-warning\").style.display=\"none\";document.getElementById(\"readability-content\").style.display=\"block\";'>click here</a> to continue.";
+                rootWarning.innerHTML = "<em>creadr</em> was intended for use on individual articles and not home pages. ";
 
             innerDiv.insertBefore( rootWarning, articleContent );
+            window.readabilityFailure = true;
         }
 
         readability.postProcessContent(articleContent);
@@ -345,10 +346,7 @@ var readability = {
         var articleTools = document.createElement("DIV");
 
         articleTools.id        = "readTools";
-        articleTools.innerHTML =
-            "<a href='#' onclick='return window.location.reload()' title='Reload original page' id='reload-page'>Reload Original Page</a>" +
-            "<a href='#' onclick='javascript:window.print();' title='Print page' id='print-page'>Print Page</a>" +
-            "<a href='#' onclick='readability.emailBox(); return false;' title='Email page' id='email-page'>Email Page</a>";
+        articleTools.innerHTML = "<a href='#' onclick='javascript:window.print();' title='Print page' id='print-page'>Print Page</a>";
 
         return articleTools;
     },

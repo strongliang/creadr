@@ -32,7 +32,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
             // displayLoadStatus();
             // getContent(globals.testing);
             X_readability();
-            processDom(document);
+            if (window.readabilityFailure) {
+                // displayErr('creadr cannot process this page')
+            } else {
+                processDom(document);
+            }
 
         }
     }
