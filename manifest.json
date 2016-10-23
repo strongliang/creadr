@@ -1,10 +1,10 @@
 {
   "name": "creadr",
+  "homepage_url": "http://creadr.io",
   "description": "creadr is a tool designed to help Chinese learners with reading web content",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "permissions": [
-    "activeTab",
-    "https://www.readability.com/"
+    "activeTab"
   ],
   "background": {
     "scripts": ["background.js"],
@@ -33,5 +33,6 @@
     "default_title": "Left click to turn on Chinese reader mode",
     "default_icon": "icon_v4.png"
   },
+  "offline_enabled": true,
   "manifest_version": 2
 }
